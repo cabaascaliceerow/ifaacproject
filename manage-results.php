@@ -23,6 +23,109 @@ if(strlen($_SESSION['alogin'])=="") {
     <link rel="stylesheet" href="css/main.css" media="screen" >
     <script src="js/modernizr/modernizr.min.js"></script>
     <style>
+        @media (max-width:768px){
+
+    .panel-body{
+        padding:10px !important;
+        overflow-x:hidden !important;
+    }
+
+    /* table header hide */
+
+    #example thead,
+    #example tfoot{
+        display:none !important;
+    }
+
+    /* mobile card style */
+
+    #example,
+    #example tbody,
+    #example tr,
+    #example td{
+        display:block;
+        width:100%;
+    }
+
+    #example tbody tr{
+        margin-bottom:12px;
+        border:1px solid #ddd;
+        border-radius:8px;
+        background:#fff;
+        padding:6px;
+    }
+
+    #example tbody td{
+        display:flex;
+        align-items:flex-start;
+        gap:10px;
+        padding:10px 8px;
+        font-size:12px;
+        border-bottom:1px solid #eee !important;
+        word-break:break-word;
+    }
+
+    #example tbody td:last-child{
+        border-bottom:none !important;
+    }
+
+    /* labels */
+
+    #example tbody td:nth-child(1):before{
+        content:"#";
+    }
+
+    #example tbody td:nth-child(2):before{
+        content:"Student Name";
+    }
+
+    #example tbody td:nth-child(3):before{
+        content:"Roll Id";
+    }
+
+    #example tbody td:nth-child(4):before{
+        content:"Semester";
+    }
+
+    #example tbody td:nth-child(5):before{
+        content:"Reg Date";
+    }
+
+    #example tbody td:nth-child(6):before{
+        content:"Status";
+    }
+
+    #example tbody td:nth-child(7):before{
+        content:"Action";
+    }
+
+    #example tbody td:before{
+        font-weight:bold;
+        color:#333;
+        min-width:110px;
+        flex-shrink:0;
+    }
+
+    /* search */
+
+    .dataTables_filter input{
+        width:100% !important;
+    }
+
+    .dataTables_filter,
+    .dataTables_paginate,
+    .dataTables_info{
+        text-align:center !important;
+    }
+
+    /* edit icon */
+
+    .fa-edit{
+        font-size:16px;
+        color:#007bff;
+    }
+
+}
     .errorWrap { padding:10px; margin:0 0 20px 0; background:#fff; border-left:4px solid #dd3d36; box-shadow:0 1px 1px 0 rgba(0,0,0,.1);}
     .succWrap { padding:10px; margin:0 0 20px 0; background:#fff; border-left:4px solid #5cb85c; box-shadow:0 1px 1px 0 rgba(0,0,0,.1);}
     </style>
@@ -134,8 +237,13 @@ if($query->rowCount() > 0) {
 <script src="js/DataTables/datatables.min.js"></script>
 <script src="js/main.js"></script>
 <script>
-$(function($) {
-    $('#example').DataTable();
+$(function(){
+
+    $('#example').DataTable({
+        responsive:false,
+        autoWidth:false
+    });
+
 });
 </script>
 </body>

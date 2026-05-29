@@ -45,6 +45,107 @@ $complaints = $stmt->fetchAll(PDO::FETCH_OBJ);
 <link rel="stylesheet" type="text/css" href="js/DataTables/datatables.min.css"/>
 
 <style>
+    @media (max-width:768px){
+
+    .panel-body,
+    .card-body{
+        padding:10px !important;
+        overflow-x:hidden !important;
+    }
+
+    /* hide table header */
+
+    #complaintsTable thead,
+    #complaintsTable tfoot{
+        display:none !important;
+    }
+
+    /* mobile cards */
+
+    #complaintsTable,
+    #complaintsTable tbody,
+    #complaintsTable tr,
+    #complaintsTable td{
+        display:block;
+        width:100%;
+    }
+
+    #complaintsTable tbody tr{
+        margin-bottom:12px;
+        border:1px solid #ddd;
+        border-radius:8px;
+        background:#fff;
+        padding:6px;
+    }
+
+    #complaintsTable tbody td{
+        display:flex;
+        align-items:flex-start;
+        gap:10px;
+        padding:10px 8px;
+        font-size:12px;
+        border-bottom:1px solid #eee !important;
+        word-break:break-word;
+        text-align:left !important;
+    }
+
+    #complaintsTable tbody td:last-child{
+        border-bottom:none !important;
+    }
+
+    /* labels */
+
+    #complaintsTable tbody td:nth-child(1):before{
+        content:"#";
+    }
+
+    #complaintsTable tbody td:nth-child(2):before{
+        content:"Student Name";
+    }
+
+    #complaintsTable tbody td:nth-child(3):before{
+        content:"Roll ID";
+    }
+
+    #complaintsTable tbody td:nth-child(4):before{
+        content:"Message";
+    }
+
+    #complaintsTable tbody td:nth-child(5):before{
+        content:"Submitted";
+    }
+
+    #complaintsTable tbody td:nth-child(6):before{
+        content:"Action";
+    }
+
+    #complaintsTable tbody td:before{
+        font-weight:bold;
+        color:#333;
+        min-width:100px;
+        flex-shrink:0;
+    }
+
+    /* search */
+
+    .dataTables_filter input{
+        width:100% !important;
+    }
+
+    .dataTables_filter,
+    .dataTables_paginate,
+    .dataTables_info{
+        text-align:center !important;
+    }
+
+    /* delete button */
+
+    .btn-delete{
+        padding:4px 10px !important;
+        font-size:12px !important;
+    }
+
+}
 .card{
     box-shadow:0 0 15px rgba(0,0,0,0.1);
     border-radius:10px;
@@ -183,7 +284,12 @@ foreach($complaints as $c){ ?>
 
 <script>
 $(document).ready(function() {
-    $('#complaintsTable').DataTable();
+
+    $('#complaintsTable').DataTable({
+        responsive:false,
+        autoWidth:false
+    });
+
 });
 </script>
 

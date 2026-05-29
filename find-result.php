@@ -121,7 +121,7 @@ footer a:hover {
 <!-- ================= HERO ================= -->
 <section id="home" class="hero">
     <div class="container">
-        <h1 class="display-5">School Result Management System</h1>
+        <h1 class="display-5">Result Management System</h1>
     </div>
 </section>
 

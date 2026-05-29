@@ -23,18 +23,38 @@ a i:hover {
     transform: scale(1.3);
 }
 
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-            url('kownayn_university_cover.jpg');
-            background-size: cover;
-            background-position: center;
-            height: 85vh;
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
+       .hero {
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+    url('kownayn_university_cover.jpg');
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    height: 85vh;
+    color: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+/* MOBILE FIX */
+@media (max-width: 768px) {
+    .hero {
+        height: 60vh;
+        background-position: center center;
+    }
+
+    .hero h1 {
+        font-size: 28px;
+    }
+
+    .hero p {
+        font-size: 15px;
+    }
+}
 
         .card {
             background-color:#ececec ;

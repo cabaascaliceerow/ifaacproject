@@ -18,10 +18,17 @@ $roolid=$_POST['rollid'];
 $studentemail=$_POST['emailid']; 
 $gender=$_POST['gender']; 
 $classid=$_POST['class']; 
-$dob=$_POST['dob']; 
 $status=$_POST['status'];
 $faculty=$_POST['faculty'];
 $department=$_POST['department'];
+
+// ✅ DOB Validation - hubi format sax yahay
+$dob_raw = trim($_POST['dob']);
+if(!empty($dob_raw) && strlen($dob_raw) >= 8 && strtotime($dob_raw)){
+    $dob = date('Y-m-d', strtotime($dob_raw));
+} else {
+    $dob = NULL;
+}
 
 // ✅ Hubi RollId hore loo isticmaalay (student kale mooyee naftii)
 $check = $dbh->prepare("SELECT * FROM tblstudents WHERE RollId=:rollid AND StudentId != :stid");
@@ -33,7 +40,7 @@ if($check->rowCount() > 0){
     $error = "This Roll ID already exists! Please use a different Roll ID.";
 } else {
 
-$sql="update tblstudents set 
+$sql="UPDATE tblstudents SET 
 StudentName=:studentname,
 RollId=:roolid,
 StudentEmail=:studentemail,
@@ -43,22 +50,22 @@ DOB=:dob,
 Status=:status,
 Faculty=:faculty,
 Department=:department
-where StudentId=:stid";
+WHERE StudentId=:stid";
 
 $query = $dbh->prepare($sql);
-$query->bindParam(':studentname',$studentname,PDO::PARAM_STR);
-$query->bindParam(':roolid',$roolid,PDO::PARAM_STR);
-$query->bindParam(':studentemail',$studentemail,PDO::PARAM_STR);
-$query->bindParam(':gender',$gender,PDO::PARAM_STR);
-$query->bindParam(':classid',$classid,PDO::PARAM_STR);
-$query->bindParam(':dob',$dob,PDO::PARAM_STR);
-$query->bindParam(':status',$status,PDO::PARAM_STR);
-$query->bindParam(':faculty',$faculty,PDO::PARAM_INT);
-$query->bindParam(':department',$department,PDO::PARAM_INT);
-$query->bindParam(':stid',$stid,PDO::PARAM_STR);
+$query->bindParam(':studentname', $studentname, PDO::PARAM_STR);
+$query->bindParam(':roolid',      $roolid,       PDO::PARAM_STR);
+$query->bindParam(':studentemail',$studentemail, PDO::PARAM_STR);
+$query->bindParam(':gender',      $gender,       PDO::PARAM_STR);
+$query->bindParam(':classid',     $classid,      PDO::PARAM_INT);
+$query->bindParam(':dob',         $dob,          PDO::PARAM_STR);
+$query->bindParam(':status',      $status,       PDO::PARAM_STR);
+$query->bindParam(':faculty',     $faculty,      PDO::PARAM_INT);
+$query->bindParam(':department',  $department,   PDO::PARAM_INT);
+$query->bindParam(':stid',        $stid,         PDO::PARAM_INT);
 $query->execute();
 
-$msg="Student info updated successfully";
+$msg = "Student info updated successfully";
 
 } // end else
 }
@@ -119,11 +126,11 @@ $msg="Student info updated successfully";
 </div>
 <div class="panel-body">
 
-<?php if($msg){ ?>
+<?php if(!empty($msg)){ ?>
 <div class="alert alert-success left-icon-alert">
 <strong>Well done!</strong> <?php echo htmlentities($msg); ?>
 </div>
-<?php } if($error){ ?>
+<?php } if(!empty($error)){ ?>
 <div class="alert alert-danger left-icon-alert">
 <strong>Oh snap!</strong> <?php echo htmlentities($error); ?>
 </div>
@@ -138,21 +145,29 @@ $sql="SELECT s.*, f.FacultyName, d.DepartmentName
       LEFT JOIN tbldepartment d ON s.Department = d.id
       WHERE s.StudentId=:stid";
 $query = $dbh->prepare($sql);
-$query->bindParam(':stid',$stid,PDO::PARAM_STR);
+$query->bindParam(':stid', $stid, PDO::PARAM_INT);
 $query->execute();
-$results=$query->fetchAll(PDO::FETCH_OBJ);
+$results = $query->fetchAll(PDO::FETCH_OBJ);
 
 if($query->rowCount() > 0)
 {
 foreach($results as $result)
 {
+
+// ✅ DOB display - hubi format sax yahay ka hor muujinta
+$dob_display = '';
+if(!empty($result->DOB) && strlen($result->DOB) >= 8 && strtotime($result->DOB)){
+    $dob_display = date('Y-m-d', strtotime($result->DOB));
+}
+
 ?>
 
 <!-- Full Name -->
 <div class="form-group">
 <label class="col-sm-2 control-label">Full Name</label>
 <div class="col-sm-10">
-<input type="text" name="fullanme" class="form-control" value="<?php echo htmlentities($result->StudentName); ?>" required>
+<input type="text" name="fullanme" class="form-control" 
+       value="<?php echo htmlentities($result->StudentName); ?>" required>
 </div>
 </div>
 
@@ -160,7 +175,8 @@ foreach($results as $result)
 <div class="form-group">
 <label class="col-sm-2 control-label">Roll Id</label>
 <div class="col-sm-10">
-<input type="text" name="rollid" class="form-control" value="<?php echo htmlentities($result->RollId); ?>" required>
+<input type="text" name="rollid" class="form-control" 
+       value="<?php echo htmlentities($result->RollId); ?>" required>
 </div>
 </div>
 
@@ -168,7 +184,8 @@ foreach($results as $result)
 <div class="form-group">
 <label class="col-sm-2 control-label">Email</label>
 <div class="col-sm-10">
-<input type="email" name="emailid" class="form-control" value="<?php echo htmlentities($result->StudentEmail); ?>" required>
+<input type="email" name="emailid" class="form-control" 
+       value="<?php echo htmlentities($result->StudentEmail); ?>" required>
 </div>
 </div>
 
@@ -176,9 +193,8 @@ foreach($results as $result)
 <div class="form-group">
 <label class="col-sm-2 control-label">Gender</label>
 <div class="col-sm-10" style="padding-top:7px;">
-<input type="radio" name="gender" value="Male" <?php if($result->Gender=="Male") echo "checked"; ?>> Male &nbsp;&nbsp;
-<input type="radio" name="gender" value="Female" <?php if($result->Gender=="Female") echo "checked"; ?>> Female &nbsp;&nbsp;
-<input type="radio" name="gender" value="Other" <?php if($result->Gender=="Other") echo "checked"; ?>> Other
+<input type="radio" name="gender" value="Male"   <?php if($result->Gender=="Male")   echo "checked"; ?>> Male &nbsp;&nbsp;
+<input type="radio" name="gender" value="Female" <?php if($result->Gender=="Female") echo "checked"; ?>> Female
 </div>
 </div>
 
@@ -225,21 +241,21 @@ foreach($departments as $dep){ ?>
 </div>
 </div>
 
-<!-- Class/Semester -->
+<!-- Semester -->
 <div class="form-group">
-<label class="col-sm-2 control-label">Class</label>
+<label class="col-sm-2 control-label">Semester</label>
 <div class="col-sm-10">
 <select name="class" class="form-control" required>
-<option value="">Select Class</option>
+<option value="">Select Semester</option>
 <?php
-$sql4="SELECT * from tblclasses";
+$sql4="SELECT * FROM tblclasses ORDER BY id ASC";
 $query4=$dbh->prepare($sql4);
 $query4->execute();
 $classes=$query4->fetchAll(PDO::FETCH_OBJ);
 foreach($classes as $class){ ?>
 <option value="<?php echo $class->id; ?>"
-<?php if($class->id==$result->ClassId) echo "selected"; ?>>
-<?php echo $class->ClassName; ?>
+<?php if($class->id == $result->ClassId) echo "selected"; ?>>
+<?php echo htmlentities($class->ClassName); ?>
 </option>
 <?php } ?>
 </select>
@@ -248,9 +264,11 @@ foreach($classes as $class){ ?>
 
 <!-- DOB -->
 <div class="form-group">
-<label class="col-sm-2 control-label">DOB</label>
+<label class="col-sm-2 control-label">Date of Birth</label>
 <div class="col-sm-10">
-<input type="date" name="dob" class="form-control" value="<?php echo htmlentities($result->DOB); ?>">
+<!-- ✅ DOB kaliya soo muujiya hadduu format sax yahay -->
+<input type="date" name="dob" class="form-control" 
+       value="<?php echo htmlentities($dob_display); ?>">
 </div>
 </div>
 
@@ -268,7 +286,9 @@ foreach($classes as $class){ ?>
 <!-- Submit -->
 <div class="form-group">
 <div class="col-sm-offset-2 col-sm-10">
-<button type="submit" name="submit" class="btn btn-primary">Update</button>
+<button type="submit" name="submit" class="btn btn-primary">
+<i class="fa fa-save"></i> Update Student
+</button>
 </div>
 </div>
 
@@ -290,16 +310,17 @@ foreach($classes as $class){ ?>
 <script src="js/prism/prism.js"></script>
 <script src="js/select2/select2.min.js"></script>
 <script src="js/main.js"></script>
+
 <script>
 $(document).ready(function(){
 
-    // ✅ Auto-hide alerts
+    // ✅ Auto-hide alerts after 3 seconds
     setTimeout(function(){
         $('.alert-success').fadeOut('slow');
         $('.alert-danger').fadeOut('slow');
     }, 3000);
 
-    // Marka Faculty la beddelo — AJAX departments load
+    // ✅ AJAX - Marka Faculty la beddelo, departments cusub soo load
     $('#faculty-select').change(function(){
         var facultyId = $(this).val();
         $('#department-select').html('<option value="">Loading...</option>');
@@ -327,6 +348,7 @@ $(document).ready(function(){
             }
         });
     });
+
 });
 </script>
 </body>

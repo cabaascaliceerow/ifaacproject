@@ -1,4 +1,13 @@
-  <nav class="navbar top-navbar bg-success-700 box-shadow">
+<style>
+    .top-navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 9999;
+}
+</style>
+<nav class="navbar top-navbar  bg-success-700 box-shadow">
             	<div class="container-fluid">
                     <div class="row">
                         <div class="navbar-header no-padding">

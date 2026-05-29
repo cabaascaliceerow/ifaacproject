@@ -26,7 +26,7 @@
                                         </ul>
                                     </li>
                                      <li class="has-children">
-                                        <a href="#"><i class="fa fa-users"></i> <span>Manage Faculty and Department </span> <i class="fa fa-angle-right arrow"></i></a>
+                                        <a href="#"><i class="fa fa-university"></i> <span>Manage Faculty and Department </span> <i class="fa fa-angle-right arrow"></i></a>
                                         <ul class="child-nav">
                                             <li><a href="manage-faculty.php"><i class="fa fa-university"></i> <span>Manage Faculty</span></a></li>
                                             <li><a href="manage-department.php"><i class="fa fa-sitemap"></i> <span>Manage Department</span></a></li>
@@ -72,8 +72,9 @@
                                             <li><a href="manage-results.php"><i class="fa fa fa-server"></i> <span>Manage Result</span></a></li>
                                            
                                         </ul>
+                                         <li><a href="complaints.php"><i class="fa fa-exclamation-triangle"></i> <span> Manage Student Complaints</span></a></li>
                                         <li><a href="change-password.php"><i class="fa fa fa-server"></i> <span> Admin Change Password</span></a></li>
-                                        <li><a href="complaints.php"><i class="fa fa-exclamation-triangle"></i> <span> Manage Student Complaints</span></a></li>
+                                       
                                            
                                     </li>
                             </div>
