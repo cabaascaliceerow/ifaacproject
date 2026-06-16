@@ -134,6 +134,9 @@ footer a:hover {
                                 <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password" required>
                             </div>
                             <button type="submit" name="login" class="btn btn-success w-100">Sign in <i class="fa fa-check"></i></button>
+                            <div class="text-center mt-3">
+    <a href="forgot-password.php">Forgot Password?</a>
+</div>
                         </form>
                     </div>
                 </div>
