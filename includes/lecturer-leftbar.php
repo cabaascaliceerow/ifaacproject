@@ -25,6 +25,34 @@
                     </a>
                 </li>
 
+                <li class="has-children">
+                    <a href="#">
+                        <i class="fa fa-list"></i>
+                        <span>My Records</span>
+                        <i class="fa fa-angle-right arrow"></i>
+                    </a>
+                    <ul class="child-nav">
+                        <li>
+                            <a href="lecturer-my-subjects.php">
+                                <i class="fa fa-book"></i>
+                                <span>My Subjects</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="lecturer-my-students.php">
+                                <i class="fa fa-users"></i>
+                                <span>My Students</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="lecturer-my-results.php">
+                                <i class="fa fa-check-square-o"></i>
+                                <span>Results Entered</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <li>
                     <a href="lecturer-logout.php">
                         <i class="fa fa-sign-out"></i>

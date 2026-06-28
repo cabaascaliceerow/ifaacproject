@@ -98,9 +98,10 @@ footer a:hover {
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto align-items-lg-center">
                 <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="find-result.php"> Result</a></li>
                 <li class="nav-item"><a class="nav-link" href="index.php">Admin</a></li>
-                <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="lecturer-login.php">Lecturer</a></li>
+                  <li class="nav-item"><a class="nav-link" href="find-result.php"> Result</a></li>
+                  
                 
             </ul>
         </div>

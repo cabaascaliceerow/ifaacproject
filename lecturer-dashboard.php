@@ -75,35 +75,79 @@ $subjects = $sq->fetchAll(PDO::FETCH_OBJ);
     <script src="js/modernizr/modernizr.min.js"></script>
     <script src="js/jquery/jquery-2.2.4.min.js"></script>
     <style>
-        .stat-card {
-            border-radius: 10px;
-            padding: 20px 24px;
-            color: #fff;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
-        }
-        .stat-card .num  { font-size: 38px; font-weight: 700; }
-        .stat-card .lbl  { font-size: 13px; opacity: .9; }
-        .stat-card .icon { font-size: 44px; opacity: .75; }
-        .card-blue   { background: linear-gradient(135deg,#2980b9,#1a5276); }
-        .card-green  { background: linear-gradient(135deg,#27ae60,#1e8449); }
-        .card-orange { background: linear-gradient(135deg,#e67e22,#ca6f1e); }
+    .stat-card {
+        border-radius: 10px;
+        padding: 20px 24px;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        cursor: pointer;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+    }
+    .stat-card .num  { font-size: 38px; font-weight: 700; color: #fff; }
+    .stat-card .lbl  { font-size: 13px; opacity: .95; color: #fff; }
+    .stat-card .icon { font-size: 44px; opacity: .75; color: #fff; }
 
-        .welcome-box {
-            background: linear-gradient(135deg,#1F3864,#2E75B6);
-            color: #fff;
-            border-radius: 10px;
-            padding: 20px 28px;
-            margin-bottom: 24px;
-        }
-        .welcome-box h4 { margin: 0 0 4px; }
-        .welcome-box p  { margin: 0; opacity: .85; font-size: 13px; }
+    .card-blue   { background: linear-gradient(135deg,#2980b9,#1a5276); }
+    .card-green  { background: linear-gradient(135deg,#27ae60,#1e8449); }
+    .card-orange { background: linear-gradient(135deg,#e67e22,#ca6f1e); }
 
-        thead tr { background: #1F3864; color: #fff; }
-    </style>
+    /* ✅ WELCOME BOX FIX */
+    .welcome-box {
+        background: linear-gradient(135deg, #1F3864, #2E75B6);
+        color: #ffffff !important;
+        border-radius: 10px;
+        padding: 20px 28px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .welcome-box h4 {
+        margin: 0 0 6px;
+        color: #ffffff !important;
+        font-size: 20px;
+        font-weight: bold;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    .welcome-box p {
+        margin: 0;
+        color: #ffffff !important;
+        font-size: 13px;
+        opacity: 1;
+        text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    .welcome-box i {
+        color: #ffffff !important;
+    }
+
+    /* ✅ TABLE HEADER FIX */
+    thead tr {
+        background: #1F3864 !important;
+        color: #ffffff !important;
+    }
+    thead tr th {
+        color: #ffffff !important;
+        font-weight: bold;
+        font-size: 13px;
+        border-color: #2E75B6 !important;
+    }
+
+    /* ✅ TABLE HOVER */
+    .table-hover tbody tr:hover {
+        background-color: #EEF4FF !important;
+    }
+
+    /* ✅ PANEL TITLE */
+    .panel-title i {
+        color: #1F3864;
+    }
+</style>
 </head>
 <body class="top-navbar-fixed">
 <div class="main-wrapper">
@@ -135,52 +179,62 @@ $subjects = $sq->fetchAll(PDO::FETCH_OBJ);
 
             <div class="container-fluid">
 
-                <!-- Welcome Box -->
-                <div class="welcome-box">
-                    <h4>
-                        <i class="fa fa-user-circle-o"></i>
-                        Welcome, <?php echo htmlentities($lecturer_name); ?>
-                    </h4>
-                    <p>
-                        <i class="fa fa-university"></i>
-                        <?php echo htmlentities($lec->FacultyName ?? '-'); ?>
-                        &nbsp;|&nbsp;
-                        <i class="fa fa-sitemap"></i>
-                        <?php echo htmlentities($lec->DepartmentName ?? '-'); ?>
-                    </p>
-                </div>
+            <div class="welcome-box">
+    <div style="display:flex; align-items:center; gap:15px;">
+        <div style="font-size:48px; color:#ffffff; opacity:0.9;">
+            <i class="fa fa-user-circle"></i>
+        </div>
+        <div>
+            <h4 style="color:#ffffff; font-size:22px; font-weight:bold; margin:0 0 6px 0; text-shadow:1px 1px 3px rgba(0,0,0,0.4);">
+                Welcome, <?php echo htmlentities($lecturer_name); ?>
+            </h4>
+            <p style="color:#ffffff; margin:0; font-size:13px; opacity:0.95;">
+                <i class="fa fa-university"></i>
+                <strong><?php echo htmlentities($lec->FacultyName ?? '-'); ?></strong>
+                &nbsp;&nbsp;|&nbsp;&nbsp;
+                <i class="fa fa-sitemap"></i>
+                <strong><?php echo htmlentities($lec->DepartmentName ?? '-'); ?></strong>
+            </p>
+        </div>
+    </div>
+</div>
 
-                <!-- Stat Cards -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="stat-card card-blue">
-                            <div>
-                                <div class="num"><?php echo $total_subjects; ?></div>
-                                <div class="lbl">Assigned Subjects</div>
-                            </div>
-                            <div class="icon"><i class="fa fa-book"></i></div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="stat-card card-green">
-                            <div>
-                                <div class="num"><?php echo $total_students; ?></div>
-                                <div class="lbl">Students in My Department</div>
-                            </div>
-                            <div class="icon"><i class="fa fa-users"></i></div>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="stat-card card-orange">
-                            <div>
-                                <div class="num"><?php echo $total_results; ?></div>
-                                <div class="lbl">Results Entered</div>
-                            </div>
-                            <div class="icon"><i class="fa fa-check-square-o"></i></div>
-                        </div>
-                    </div>
-                </div>
-
+            <!-- Stat Cards -->
+<div class="row">
+    <div class="col-md-4">
+        <a href="lecturer-my-subjects.php" style="text-decoration:none;">
+        <div class="stat-card card-blue">
+            <div>
+                <div class="num"><?php echo $total_subjects; ?></div>
+                <div class="lbl">Assigned Subjects</div>
+            </div>
+            <div class="icon"><i class="fa fa-book"></i></div>
+        </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="lecturer-my-students.php" style="text-decoration:none;">
+        <div class="stat-card card-green">
+            <div>
+                <div class="num"><?php echo $total_students; ?></div>
+                <div class="lbl">Students in My Department</div>
+            </div>
+            <div class="icon"><i class="fa fa-users"></i></div>
+        </div>
+        </a>
+    </div>
+    <div class="col-md-4">
+        <a href="lecturer-my-results.php" style="text-decoration:none;">
+        <div class="stat-card card-orange">
+            <div>
+                <div class="num"><?php echo $total_results; ?></div>
+                <div class="lbl">Results Entered</div>
+            </div>
+            <div class="icon"><i class="fa fa-check-square-o"></i></div>
+        </div>
+        </a>
+    </div>
+</div>
                 <!-- Assigned Subjects Table -->
                 <div class="row">
                     <div class="col-md-12">

@@ -128,10 +128,14 @@ table.dataTable thead{
 }
 
 #example tbody td:nth-child(6):before{
-    content:"Status";
+    content:"Lecturer";
 }
 
 #example tbody td:nth-child(7):before{
+    content:"Status";
+}
+
+#example tbody td:nth-child(8):before{
     content:"Action";
 }
 
@@ -265,10 +269,11 @@ Manage Subjects Combination
 <thead>
 <tr>
 <th>#</th>
-<th>Class and Section</th>
+<th>Class</th>
 <th>Subject</th>
 <th>Faculty</th>
 <th>Department</th>
+<th>Lecturer</th>
 <th>Status</th>
 <th>Action</th>
 </tr>
@@ -277,10 +282,11 @@ Manage Subjects Combination
 <tfoot>
 <tr>
 <th>#</th>
-<th>Class and Section</th>
+<th>Class </th>
 <th>Subject</th>
 <th>Faculty</th>
 <th>Department</th>
+<th>Lecturer</th>
 <th>Status</th>
 <th>Action</th>
 </tr>
@@ -296,7 +302,8 @@ tblsubjects.SubjectName,
 tblfaculty.FacultyName,
 tbldepartment.DepartmentName,
 tblsubjectcombination.id as scid,
-tblsubjectcombination.status
+tblsubjectcombination.status,
+COALESCE(tbllecturer.LecturerName, 'Not Assigned') as LecturerName
 
 FROM tblsubjectcombination
 
@@ -310,7 +317,10 @@ JOIN tblfaculty
 ON tblfaculty.id = tblsubjectcombination.FacultyId
 
 JOIN tbldepartment
-ON tbldepartment.id = tblsubjectcombination.DepartmentId";
+ON tbldepartment.id = tblsubjectcombination.DepartmentId
+
+LEFT JOIN tbllecturer
+ON tbllecturer.id = tblsubjectcombination.LecturerId";
 
 $query = $dbh->prepare($sql);
 
@@ -346,23 +356,30 @@ foreach($results as $result)
 <?php echo htmlentities($result->DepartmentName);?>
 </td>
 
+<!-- ✅ LECTURER CUSUB -->
 <td>
+<?php if($result->LecturerName == 'Not Assigned'): ?>
+    <span style="color:red; font-size:12px;">
+        <i class="fa fa-exclamation-triangle"></i>
+        Not Assigned
+    </span>
+<?php else: ?>
+    <span style="color:green;">
+        <i class="fa fa-user"></i>
+        <?php echo htmlentities($result->LecturerName); ?>
+    </span>
+<?php endif; ?>
+</td>
 
+<td>
 <?php
-
 $stts=$result->status;
-
-if($stts=='0')
-{
+if($stts=='0'){
     echo htmlentities('Inactive');
-}
-else
-{
+} else {
     echo htmlentities('Active');
 }
-
 ?>
-
 </td>
 
 <td>

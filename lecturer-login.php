@@ -80,10 +80,11 @@ if(isset($_POST['login']))
         <div class="collapse navbar-collapse" id="mainNavbar">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="home.php">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="find-result.php">Result</a></li>
+             
                 <li class="nav-item"><a class="nav-link" href="index.php">Admin</a></li>
                 <li class="nav-item">
                     <a class="nav-link active" href="lecturer-login.php">Lecturer</a>
+                       <li class="nav-item"><a class="nav-link" href="find-result.php">Result</a></li>
                 </li>
             </ul>
         </div>
@@ -149,9 +150,10 @@ if(isset($_POST['login']))
             <div class="col-md-4">
                 <h6>Links</h6>
                 <a href="home.php"           class="d-block">Home</a>
-                <a href="find-result.php"    class="d-block">Results</a>
+              
                 <a href="index.php"          class="d-block">Admin</a>
                 <a href="lecturer-login.php" class="d-block">Lecturer</a>
+                  <a href="find-result.php"    class="d-block">Results</a>
             </div>
             <div class="col-md-4">
                 <h6>Contact</h6>
